@@ -2,10 +2,16 @@ mod cmd;
 mod crypto;
 mod database;
 mod utils;
+use database::Database;
 
-fn main() {
+
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     let env = utils::get_env();
-    println!("{:#?}", env);
+    let url = env.get(&String::from("URL")).unwrap().to_string();
+
+    let db = Database::new(url);
 
     println!("Hello, world!");
+    Ok(())
 }

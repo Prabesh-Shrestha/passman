@@ -1,3 +1,6 @@
+use sqlx::sqlite::SqlitePool;
+
+
 pub enum DatabaseType {
     SQLITE,
     POSTGRE,
@@ -9,12 +12,18 @@ pub struct Database {
 }
 
 impl Database {
-    pub fn new(&self, url: String) -> Database {
+    pub fn new(url: String) -> Database {
         Database {
             url,
             db_type: DatabaseType::SQLITE,
         }
     }
-    
-    pub fn 
+
+    pub async fn connect(&self) -> {
+        match &self.db_type {
+            DatabaseType::SQLITE => return SqlitePool::connect("sqlite::memory:").await?,
+            DatabaseType::POSTGRE => (),
+            DatabaseType::SQLSERVER => (),
+        }
+    }
 }
