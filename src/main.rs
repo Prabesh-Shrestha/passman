@@ -1,6 +1,6 @@
 mod cmd;
 mod crypto;
-mod database;
+mod manager;
 mod utils;
 use database::Database;
 
