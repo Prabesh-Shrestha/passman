@@ -21,4 +21,23 @@ impl PasswordManager {
         .await?;
         Ok(PasswordManager { db_conn })
     }
+    fn hash_password(&self, password: &str) -> String {
+        let mut hasher = Sha256::new();
+        hasher.update(password);
+        hasher.finalize().to_hex()
+    }
+    async fn add_account(&mut self, username: &str, password: &str) -> Result<(), sqlx::Error> {
+        #[allow(unused)]
+        let hashed_password = hash_password(password);
+        #[allow(unused)]
+        let _ = sqlx::query!(
+            "INSERT OR REPLACE INTO accounts (username, password) VALUES (?, ?)",
+            username,
+            hashed_password
+        )
+        .execute(&self.db_conn)
+        .await?;
+        Ok(())
+    }
+
 }
