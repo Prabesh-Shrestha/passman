@@ -2,7 +2,6 @@ mod cmd;
 mod crypto;
 mod manager;
 mod utils;
-use database::Database;
 
 
 #[tokio::main]
